@@ -1,0 +1,251 @@
+#include"test.h"
+void InitSeqList(PSeqList pSeqList)
+{
+	assert(pSeqList);
+	memset(pSeqList->array,0,MAXSIZE *sizeof(DataType));
+	pSeqList->size=0;
+}
+void PushBack(PSeqList pSeqList, DataType data)
+{
+	int idx = 0;
+	assert(pSeqList);
+	if(pSeqList->size>MAXSIZE)
+	{	
+		printf("顺序表已满\n");
+		return ;
+	}
+	else
+	{
+		pSeqList->array[pSeqList->size]=data;
+
+	}
+	pSeqList->size++;
+	//Insert( pSeqList, pSeqList->size,  data);
+}
+void PopBack(PSeqList pSeqList)
+{
+	int idx = 0;
+	assert(pSeqList);
+	if(Empty(pSeqList))
+	{	
+		printf("顺序表已空\n");
+		return ;
+	}
+	else
+	{
+		pSeqList->size--;
+	}
+	//Erase(pSeqList, pSeqList->size);
+}
+void PrintSeqList(PSeqList pSeqList)
+{
+
+	int idx = 0;
+	assert(pSeqList);
+	for(idx=0;idx<pSeqList->size;idx++)
+	{
+		printf("%d",pSeqList->array[idx]);
+	}
+	printf("\n");
+}
+void PushFront(PSeqList pSeqList, DataType data)
+{
+	int idx = 0;
+	assert(pSeqList);
+	if(pSeqList->size>MAXSIZE)
+	{	
+		printf("顺序表已满\n");
+		return ;
+	}
+	for(idx=pSeqList->size;idx>=0;idx--)
+	{
+		pSeqList->array[idx+1]=pSeqList->array[idx];
+
+	}
+	pSeqList->array[0]=data;
+	pSeqList->size++;
+	//Insert( pSeqList, 0,  data);
+}
+void PopFront(PSeqList pSeqList)
+{
+	int idx = 0;
+	assert(pSeqList);
+	if(Empty(pSeqList))
+	{	
+		printf("顺序表已空\n");
+		return ;
+	}
+	for(idx=0;idx<pSeqList->size;idx++)
+	{
+		pSeqList->array[idx]=pSeqList->array[idx+1];
+	}
+	pSeqList->size--;
+	//Erase(pSeqList, 0)
+}
+void Insert(PSeqList pSeqList, int pos, DataType data)
+{
+	int idx = 0;
+	assert(pSeqList);
+	if(pSeqList->size>MAXSIZE)
+	{	
+		printf("顺序表已满\n");
+		return ;
+	}
+	for(idx=pSeqList->size;idx>=pos;idx--)
+	{
+		pSeqList->array[idx+1]=pSeqList->array[idx];
+
+	}
+	pSeqList->array[pos]=data;
+	pSeqList->size++;
+}
+void Erase(PSeqList pSeqList, int pos)
+{
+	int idx = 0;
+	assert(pSeqList);
+	if(Empty(pSeqList))
+	{	
+		printf("顺序表已空\n");
+		return ;
+	}
+	for(idx=pos;idx<pSeqList->size-1;idx++)
+	{
+		pSeqList->array[idx]=pSeqList->array[idx+1];
+	}
+	pSeqList->size--;
+}
+int Find(PSeqList pSeqList, DataType data)
+{
+	int idx = 0;
+	assert(pSeqList);
+	for(idx=0;idx<pSeqList->size;idx++)
+	{
+		if(pSeqList->array[idx]==data)
+			return idx;
+	}
+	return -1;
+}
+void Remove(PSeqList pSeqList, DataType data)
+{
+	assert(pSeqList);
+	if( Find( pSeqList,  data)==-1)
+	{
+		printf("%d不存在",data);
+		return;
+	}
+	else
+		Erase( pSeqList,Find( pSeqList,  data));
+}
+void RemoveAll(PSeqList pSeqList, DataType data)
+{
+	int icount = 0;
+	int idx = 0;
+	assert(pSeqList);
+	for(idx=0;idx<pSeqList->size;idx++)
+	{
+		if(pSeqList->array[idx]==data)
+		{
+			icount++;
+		}                
+		else          
+		{
+			pSeqList->array[idx-icount]=pSeqList->array[idx];
+		}
+	}
+	pSeqList->size-=icount;
+}
+void BubbleSort(PSeqList pSeqList)
+{
+	int idx = 0;
+	int i = 0;
+	int j = 0;
+	assert(pSeqList);
+	for(i=0;i<pSeqList->size;i++)
+	{
+		for(j=0;j<pSeqList->size-i-1;j++)
+		{
+			if(pSeqList->array[j]>pSeqList->array[j+1])
+			{
+				int temp = pSeqList->array[j];
+				pSeqList->array[j]=pSeqList->array[j+1];
+				pSeqList->array[j+1]=temp;
+
+			}
+
+		}
+	}
+}
+void SelectSort(PSeqList pSeqList)
+{
+
+	int i = 0;
+	int j = 0;
+	assert(pSeqList);
+	for(i=0;i<=pSeqList->size-1;i++)
+	{
+		int idx=i;
+		for(j=1+i;j<pSeqList->size;j++)
+		{
+			if(pSeqList->array[j]<pSeqList->array[idx])
+				idx=j;
+		}
+		if(idx!=i)
+		{
+			int temp = pSeqList->array[i];
+			pSeqList->array[i] = pSeqList->array[idx];
+			pSeqList->array[idx] = temp;
+		}
+	}
+}
+//int BinarySearch(PSeqList pSeqList, DataType data)
+//{
+//	int left = 0;
+//	int right = pSeqList->size;
+//	assert(pSeqList);
+//	while(left<=right)
+//	{
+//		int mid = (left+right)/2;
+//		if(pSeqList->array[mid]==data)
+//		{
+//			return mid;
+//		}
+//		else
+//		{
+//			if(pSeqList->array[mid]>data)
+//			{
+//				
+//		        right=mid-1;
+//		  }
+//			
+//		else
+//			if(pSeqList->array[mid]<data)
+//			{
+//				left=mid+1;
+//				
+//			}
+//		}
+//	}
+//	return -1;
+//}
+int BinarySearch(PSeqList pSeqList, int left,int right,DataType data)
+{
+	assert(pSeqList);
+	if(left<=right)
+	{
+		int mid=(left+right)/2;
+		if(pSeqList->array[mid]==data)
+			return mid;
+		else
+			if(pSeqList->array[mid]<data)
+				return BinarySearch( pSeqList,  mid+1,right, data);
+			else
+				return BinarySearch( pSeqList,  left,mid-1, data);
+	}
+	else
+		return -1;
+}
+int Empty(PSeqList pSeqList)
+{
+	assert(pSeqList);
+	return 0==pSeqList->size?1:0;
+}
