@@ -1,0 +1,177 @@
+
+void InitList(PNode* pHead)//初始化
+{
+	(*pHead)=NULL;
+}
+PNode BuyNode(DataType data)//新建节点
+{
+	PNode pNewNode=(Node *)malloc( sizeof(Node));
+	pNewNode->data=data;
+	pNewNode->next=NULL;
+	return pNewNode;
+}
+void PushBack(PNode* pHead, DataType data)//尾插
+{
+	PNode pNewNode = NULL;
+	assert(pHead);
+	if(*pHead==NULL)
+	{
+		pNewNode=BuyNode(data);
+		*pHead=pNewNode;
+	}
+	else
+	{
+		PNode pChead = *pHead;
+		while((pChead)->next!=NULL)
+		{	
+			pChead= pChead->next;
+		}
+		pNewNode=BuyNode(data);
+		pChead->next=pNewNode;
+		pNewNode->next=NULL;
+	}
+}
+
+void PopBack(PNode* pHead)//尾删
+{	
+	PNode pNewNode = *pHead;
+	assert(pHead);
+	if(pNewNode==NULL)
+	{
+		return;
+	}
+	else
+	{
+		while((pNewNode)->next->next != NULL)
+		{
+			pNewNode= (pNewNode)->next;
+		}
+		(pNewNode)->next =NULL;
+		free((pNewNode)->next);
+	}
+}
+void PushFront(PNode* pHead, DataType data)//头插
+{
+	PNode pNewNode = NULL;
+	assert(pHead);
+	pNewNode = BuyNode(data);
+	if(pNewNode)
+	{
+		pNewNode->next = *pHead;
+		*pHead = pNewNode;
+	}
+}
+void PopFront(PNode *pHead)//头删
+{
+	PNode pNewNode = *pHead;
+	if(*pHead==NULL)
+	{
+		return;
+	}
+	else
+	{
+		*pHead = (*pHead)->next;
+		free(pNewNode);
+		pNewNode = NULL;
+	}
+}
+PNode Find(PNode pHead, DataType data)//寻找节点
+{
+	PNode pCurNode = pHead;
+	while(pCurNode)
+	{
+		if(pCurNode->data == data)
+		{
+			return pCurNode;
+		}
+		pCurNode = pCurNode->next;
+	}
+	return NULL;
+}
+void DeleteNotTailNode(PNode * pos)//删除非尾结点
+{
+	PNode pDelNode = NULL;
+	PNode pNewNode = *pos;
+	if(pNewNode->next==NULL||pNewNode==NULL)
+	{
+		return ;
+	}
+	pDelNode = (* pos)->next;
+	(* pos)->data = pDelNode->data;
+	(* pos)->next = pDelNode->next;
+	free(pDelNode);
+}
+void Insert(PNode pos, DataType data)//任意位置插入节点
+{
+	PNode pNewNode = NULL;
+	if(pos==NULL)
+	{		
+		pNewNode=BuyNode(data);
+		pos=pNewNode;
+		return ;
+	}
+	else
+	{
+		pNewNode = BuyNode(data);
+		pNewNode->next = pos->next;
+		pos->next = pNewNode;
+	}
+}
+void InsertNotHeadNode(PNode pos,DataType data)//插入非头结点
+{
+	PNode pNewNode = NULL;
+	if(pos==NULL)
+	{
+		return;
+	}
+	pNewNode = BuyNode(data);
+	pNewNode->next = pos->next;
+	pos->next = pNewNode;
+}
+void Erase(PNode* pHead, PNode pos)//删除任意节点
+{
+	PNode pDelNode = NULL;
+	assert(pHead);
+	if( pos!=NULL)
+	{
+		pDelNode =pos->next;
+		pos->data = pDelNode->data;
+		pos->next = pDelNode->next;
+		free(pDelNode);
+	}
+}
+int Size(PNode pHead)//求链表大小
+{
+	int size = 0;
+	assert(pHead);
+	while(pHead)
+	{
+		size++;
+		pHead=pHead->next;
+	}
+	return size;
+}
+void Clear(PNode* pHead)//清空链表
+{
+	while((*pHead)!=NULL)
+	{
+		PopFront(pHead);
+	}
+}
+void ResversePrintList(PNode pHead)//反向打印链表
+{
+	if(pHead!=NULL)
+	{
+		ResversePrintList(pHead->next);
+		printf("%d->",pHead->data);
+	}
+}
+void PrintList(PNode pHead)//打印链表
+{
+	while(pHead!= NULL)
+	{
+		printf("%d->",pHead->data);
+		pHead = pHead->next;
+	}
+	printf("NULL\n");
+}
