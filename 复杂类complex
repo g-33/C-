@@ -1,0 +1,117 @@
+
+class Complex
+{
+public:
+	Complex(double r = 1.0,double i = 1.0)
+		:_real(r)
+		,_image(i)
+	{
+		cout<<"Complex(double r ,double i )"<<endl;
+	}
+	Complex( const Complex& c)
+		:_real(c._real)
+		,_image(c._image)
+	{
+		cout<<"Complex( const Complex& c)"<<endl;
+	}
+
+	~Complex()
+	{
+		cout<<"~Complex()"<<endl;
+
+	}
+	Complex operator+(const Complex& c)
+	{
+		return Complex(_real+c._real,_image+c._image);
+	}
+	Complex operator-(const Complex& c)
+	{
+		return Complex(_real-c._real,_image-c._image);
+	}
+	//连续赋值
+	Complex& operator=(const Complex& c)
+	{
+		//cout<<"operator"<<this<<endl;
+		if(this != &c)
+		{
+			_real = c._real;
+			_image = c._image;
+		}
+		return *this;
+	}
+	Complex operator*(const Complex& c)
+
+	{
+		return Complex(_real*c._real,_image*c._image);
+	}
+	Complex operator/(const Complex& c)
+	{
+		return Complex(_real/c._real,_image/c._image);
+
+	}
+	Complex& operator+=(const Complex& c)
+	{
+		return Complex(_real+=c._real,_image+=c._image);
+
+	}
+	Complex& operator-=(const Complex& c)
+	{
+		return Complex(_real-=c._real,_image-=c._image);
+
+	}
+	Complex& operator*=(const Complex& c)
+	{
+		return Complex(_real*=c._real,_image*=c._image);
+
+	}
+	Complex& operator/=(const Complex& c)
+	{
+		return Complex(_real/=c._real,_image/=c._image);
+
+	}
+	bool operator >(const Complex& c)
+	{
+		if(this>&c)
+			return true;
+		else
+			return false;
+	}
+	bool operator >=(const Complex& c)
+	{
+		if(this>=&c)
+			return true;
+		else
+			return false;
+	}
+	bool operator <(const Complex& c)
+	{
+		if(this<&c)
+			return true;
+		else
+			return false;
+	}
+	bool operator <=(const Complex& c)
+	{
+		if(this<=&c)
+			return true;
+		else
+			return false;
+	}
+	bool operator ==(const Complex& c)
+	{
+		if(this==&c)
+			return true;
+		else
+			return false;
+	}
+	bool operator !=(const Complex& c)
+	{
+		if(this!=&c)
+			return true;
+		else
+			return false;
+	}
+private:
+	double _real ;
+	double _image;
+};
